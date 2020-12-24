@@ -1,38 +1,37 @@
-import {validateYouTubeUrl as validate} from 'validator.js';
-
 // Selecting elements from DOM
-const converter = document.querySelector('#converter');
-const url       = document.querySelector('#url');
-const submit    = document.querySelector('#submit');
+const submit = document.querySelector('#submit');
+
 
 //check if youtube link is valid
-if(validate(url) === false){
-    alert(
-        'Enter a valid YouTube url. ' +
-        `${url} is not valid.`
-    );
-    return false;
+function validateYouTubeUrl(url) {    
+    if (url != undefined || url != '') {  
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[2].length == 11) {
+            return true;         
+        } else {
+            return false;
+        }
+    }
 }
 
-// Manipulating style
-converter.style.color = '#0a4137';
-
-// Variables initilization
-const path    = "file:///home/jyr/Documents/projects/Youtube2Mp3/index.html";
-const method  = "POST";
 
 // AJAX
 submit.addEventListener('click', function(){   
-    const request = new XMLHttpRequest();
-
+    if(validateYouTubeUrl(document.querySelector('#url').value) == false){
+        // console.log('ee');
+        return false;
+    }
+    let request = new XMLHttpRequest();
+    console.log("mpike");
     request.onreadystatechange = function(){
         if(request.readyState == 4){
             if(request.status >= 200 && request.status < 300){
-                onLoadedFunc.call(null, request.responseText);
+                // console.log("kati");
             }
         }   
     };
 
-    request.open(method, path, true);
+    request.open("POST", "file:///home/jyr/Documents/projects/Youtube2Mp3/index.html", true);
     request.send();
 });
