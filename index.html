@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <title>ytb2mp3</title>
+        <script src='js/script.js' async></script>
     </head> 
 
     <body>
@@ -17,7 +18,8 @@
                     <input type="url" id="url" name="url" placeholder="Your link here..." pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?">      
                 </form> 
             </div>
-            <button type="submit" form="form" value="Submit">Convert</button>
+            <button type="submit" id="submit" form="form" value="Submit">Convert</button>
+            <button type="submit" id="submit" form="form" value="Submit" hidden>Download</button>
         </div>
 
         <!--We see after the above; maybe some terms of use or something else in paragraphs-->
