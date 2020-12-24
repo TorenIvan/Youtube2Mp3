@@ -1,0 +1,50 @@
+body{
+    background-color:#0a4137;
+    text-justify: auto;
+}
+
+header{
+    margin-top: 65px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+header p{
+    font-size: 35px;
+    font-style: italic;
+    color: floralwhite;
+}
+
+#container{
+    margin: auto;
+    width: 60%;
+    padding-bottom: 3%;
+    padding-top: 9px;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color:#01352a;
+    opacity: 1.0;
+}
+
+#container p{
+    margin: 0%;
+    color: wheat;
+    margin-bottom: 1%;
+}
+
+#converter{
+    margin: auto;
+    padding: 2%;
+    background-color: #024b3b;
+}
+
+#converter form input{
+    width: 100%;
+    color: black;
+}
+
+#container button{
+    float: right;
+    margin-top: 1%;
+}
