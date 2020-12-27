@@ -47,4 +47,6 @@ header p{
 #container button{
     float: right;
     margin-top: 1%;
+    cursor: pointer;
 }
+

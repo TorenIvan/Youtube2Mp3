@@ -11,7 +11,7 @@ submit.addEventListener('click', function(){
         return false;
     }
     var url = document.querySelector('#url').value;
-    var path = "http://localhost:5005/song?url=" + url;
+    var path = "http://127.0.0.1:5005/song?url=" + url;
 
     // var request = new XMLHttpRequest();
     // request.open("GET", path, true);
@@ -36,7 +36,7 @@ submit.addEventListener('click', function(){
     //     }   
     // };
 
-    window.location.href = path;
+    window.open(path,"_blank");
 
 
     // request.send();
