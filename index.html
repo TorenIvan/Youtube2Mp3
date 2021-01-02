@@ -2,26 +2,33 @@
 <html>
     <head>
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
+        <meta content="utf-8" http-equiv="encoding">        
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type='text/javascript' src="js/buttons.js" async></script>
+        <script type='module' src="js/script.js" async></script>
         <title>ytb2mp3</title>
-        <script type="module" src="./js/script.js" defer></script>
     </head> 
 
     <body>
         <header>
-            <p>Simple youtube to mp3/mp4 converter</p>
+            <p>YouTube Converter</p>
         </header>
 
         <div id="container">
             <p>Please insert a valid YouTube link</p> 
             <div id="converter">
-                <form id="form" >
+                <form id="form">
                     <input type="url" id="url" name="url" placeholder="Your link here..." pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?">      
                 </form> 
             </div>
-            <button type="submit" id="submit" form="form" value="Submit">Convert</button>
-            <!-- <button type="submit" id="submit" form="form" value="Submit" hidden>Download</button> -->
+            <div id="button-container">
+                <button type="button" id="mp3" class = 'active'>mp3</button>
+                <button type="button" id="mp4" class = 'inactive'>mp4</button>
+            </div>
+            <div id="submit-button">
+                <button type="submit" form="form" id="submit" value="Submit">Convert</button>
+            </div>
         </div>
 
         <!--We see after the above; maybe some terms of use or something else in paragraphs-->
