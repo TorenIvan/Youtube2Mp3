@@ -1,5 +1,3 @@
-
-
 body{
     background-color:#0a4137;
     text-justify: auto;
@@ -47,15 +45,26 @@ header p{
     padding: 25px;
     background-color: #024b3b;
     border-radius: 25px;
+    -webkit-border-radius: 25px;
 }
 
-#converter form input{
+#converter #form{
+    margin: 0 auto;
+    padding-right: 0.5em;
+    -webkit-padding-end: 0.5em;
+}
+
+
+#converter #url{
     width: 100%;
-    height: 25px;
+    height: 30px;
     color: black;
-    /* border-radius: none; */
     font-size: 1.1875em;
-    /* text-size-adjust: none; */
+    border-radius: 0px;
+    -webkit-border-radius: 5px;
+    border: none;
+    outline: none;
+    padding-left: 7px;
 }
 
 #button-container{
@@ -63,7 +72,8 @@ header p{
     margin-top: 1%;
 }
 
-.inactive{
+.active{
+    cursor: pointer;
     font-size: 1.15em;
     margin: 0 auto;
 }
@@ -87,17 +97,20 @@ header p{
     padding-bottom: 0%;
 }
 
-.active, #submit-button :hover{
-    cursor: pointer;
+.inactive{
     font-weight: bolder;
     font-size: larger;
     color: white;
     background-color: #0a4137;
     border: none;
     outline: none;
-    transform: scale(1.30);
+    transform: scale(1.10);
 }
 
 
-/* ,#mp3,#mp4 */
-/* ,#mp3:hover,#mp4:hover, */
+#submit-button :hover{
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
+

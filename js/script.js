@@ -10,7 +10,7 @@ submit.addEventListener('click', function(){
         return false;
     }
     var url = document.querySelector('#url').value;
-    var path = "http://127.0.0.1:5005/videos?url=" + url;
+    var path = "http://localhost:5005/songs?url=" + url;
 
     window.open(path,"_blank");
 
