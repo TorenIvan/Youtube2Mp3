@@ -21,6 +21,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
-    "ytdl-core": "^4.3.1"
+    "ytdl-core": "^4.4.0"
   }
 }
