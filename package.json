@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
+    "get-youtube-title": "^1.0.1",
     "ytdl-core": "^4.4.0"
   }
 }
