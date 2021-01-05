@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const getYoutubeTitle = require('get-youtube-title');
+const { getInfo } = require('ytdl-core');
 
  class YouTubeParser {
 
@@ -38,15 +39,11 @@ const getYoutubeTitle = require('get-youtube-title');
 
 
   //get video title
-   YouTubeGetTitle(){
+   async YouTubeGetInfo(){
     let id = ytdl.getURLVideoID(this.url);
-    getYoutubeTitle(id, function (err, title) {
-      title = title.replace(/[^a-z0-9\-]/gi, '_');
-      // console.log(title); // 'SLCHLD - EMOTIONS (feat. RIPELY) (prod. by GILLA)'
-      return title;
-    });
+    let info = await ytdl.getInfo(id);
+    return info;
   }
-
  
 }
 
@@ -60,8 +57,7 @@ console.log(kana.YouTubeValidateId());
 // kana.YouTubeGetTitle();
 // kana.YouTubeGetTitle();
 (async () => {
-  let x = await kana.YouTubeGetTitle();
-  console.log(x);
+  console.log(await kana.YouTubeGetInfo());
 })()
 
 
