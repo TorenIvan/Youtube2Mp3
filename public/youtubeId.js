@@ -1,15 +1,11 @@
 const ytdl = require('ytdl-core');
-const getYoutubeTitle = require('get-youtube-title');
 const { getInfo } = require('ytdl-core');
-const fetchVideoInfo = require('youtube-info');
-
 
  class YouTubeParser {
 
   //constructor
   constructor(url){
     this.url = url;
-    console.log(this.url);
   }
 
   //get video id (aka vid or v)
@@ -46,6 +42,8 @@ const fetchVideoInfo = require('youtube-info');
         resolve(info);
      }).then((result) => {
       resolve(result);
+     }).catch((error) => {
+       reject(error);
      });
     });
   }
@@ -53,17 +51,22 @@ const fetchVideoInfo = require('youtube-info');
 }
 
 
-let kana = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
-console.log(kana.YouTubeGetID());
-console.log(kana.YouTubeGetID());
-console.log(kana.YouTubeValidateURL());
-console.log(kana.YouTubeValidateId());
+//Example usage
 
-kana.YouTubeGetInfo()
-.then((message) => {
-  console.log(message.videoDetails.title);
-  console.log(message.videoDetails.lengthSeconds);
-});
+// let kana = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+
+// console.log(kana.YouTubeGetID());
+// console.log(kana.YouTubeGetID());
+// console.log(kana.YouTubeValidateURL());
+// console.log(kana.YouTubeValidateId());
+
+// kana.YouTubeGetInfo()
+// .then((message) => {
+//   console.log(message.videoDetails.title);
+//   console.log(message.videoDetails.lengthSeconds);
+// }).catch((_message) => {
+//   console.log('somethig is sooooo wrong');
+// });
 
 
 
