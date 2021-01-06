@@ -1,6 +1,8 @@
 const ytdl = require('ytdl-core');
 const getYoutubeTitle = require('get-youtube-title');
 const { getInfo } = require('ytdl-core');
+const fetchVideoInfo = require('youtube-info');
+
 
  class YouTubeParser {
 
@@ -37,14 +39,17 @@ const { getInfo } = require('ytdl-core');
     return ytdl.validateURL(this.url);
   }
 
-
-  //get video title
-   async YouTubeGetInfo(){
-    let id = ytdl.getURLVideoID(this.url);
-    let info = await ytdl.getInfo(id);
-    return info;
+  YouTubeGetInfo(){
+    return new Promise((resolve, reject) => {
+      ytdl.getInfo(this.url, function(err, info) {
+        if (err) reject(err);
+        resolve(info);
+     }).then((result) => {
+      resolve(result);
+     });
+    });
   }
- 
+
 }
 
 
@@ -53,11 +58,12 @@ console.log(kana.YouTubeGetID());
 console.log(kana.YouTubeGetID());
 console.log(kana.YouTubeValidateURL());
 console.log(kana.YouTubeValidateId());
-// console.log(kana.YouTubeGetTitle());
-// kana.YouTubeGetTitle();
-// kana.YouTubeGetTitle();
-(async () => {
-  console.log(await kana.YouTubeGetInfo());
-})()
+
+kana.YouTubeGetInfo()
+.then((message) => {
+  console.log(message.videoDetails.title);
+  console.log(message.videoDetails.lengthSeconds);
+});
+
 
 
