@@ -6,6 +6,7 @@ const { getInfo } = require('ytdl-core');
   //constructor
   constructor(url){
     this.url = url;
+    console.log('ir8e')
   }
 
   //get video id (aka vid or v)
@@ -43,7 +44,7 @@ const { getInfo } = require('ytdl-core');
      }).then((result) => {
       resolve(result);
      }).catch((error) => {
-       reject(error);
+      reject(error);
      });
     });
   }
