@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core');
 const { getInfo } = require('ytdl-core');
 
- export default class YouTubeParser {
+class YouTubeParser {
 
   //constructor
   constructor(url){
@@ -50,6 +50,8 @@ const { getInfo } = require('ytdl-core');
   }
 
 }
+
+module.exports = YouTubeParser;
 
 
 //Example usage

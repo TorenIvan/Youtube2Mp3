@@ -1,8 +1,5 @@
 'use strict';
 
-import child from '../server/processhandle/ytdlChildproc';
-import father from '../server/processhandle/ytdlFatherproc';
-
 const express = require('express'); 
 const cors = require('cors');
 const ytdl = require('ytdl-core');
@@ -10,10 +7,15 @@ const ffmpeg = require('fluent-ffmpeg');
 const helmet = require("helmet");
 const path = require('path');
 
+// Custom requires
+const father  = require('../server/processhandle/ytdlFatherproc');
+const child   = require('../server/processhandle/ytdlChildproc');
 
-var app = express();  
+
+var app = express();
 var PORT = process.env.PORT || 5005; 
- 
+
+// Middleware usage
 app.use(cors());
 app.use(helmet());
 

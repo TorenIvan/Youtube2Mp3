@@ -1,10 +1,11 @@
 const fatherProc  =  require('child_process');
 
-const childProc    = fatherProc.fork(`ytdlChildproc.js`);
+var path = require('path');
+const childProc    = fatherProc.fork(path.join(__dirname, 'ytdlChildproc.js'), { silent: true });
 
 
 //edo ftiaxnoume to mp3 ;i to mp4, type is mp3 or mp4
-export default function(url, type){
+function build(url, type){
 
   childProc.on('message', (m) => {
       console.log('PARENT got message:', m);
@@ -16,3 +17,6 @@ export default function(url, type){
   // Father process will make the youtube download. If receives the message to kill it will be killed , otherwise continue
 
 }
+
+
+module.exports = build;
