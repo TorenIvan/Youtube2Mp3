@@ -30,7 +30,7 @@ submit.addEventListener('click', function(event){
         path = "http://localhost:5005/videos?url=" + url.value;
     }
 
-    window.open(path,"_blank");
-
+    // window.open(path,"_blank");
+    window.location.href = path;
 
 });

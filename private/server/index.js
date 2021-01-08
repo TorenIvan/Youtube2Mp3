@@ -1,15 +1,16 @@
 'use strict';
 
 const express = require('express'); 
-const cors = require('cors');
-const ytdl = require('ytdl-core');
-const ffmpeg = require('fluent-ffmpeg');
-const helmet = require("helmet");
-const path = require('path');
+const cors    = require('cors');
+const ytdl    = require('ytdl-core');
+const ffmpeg  = require('fluent-ffmpeg');
+const helmet  = require("helmet");
+const path    = require('path');
+// const proc    = require('child_process');
 
 // Custom requires
-const father  = require('../server/processhandle/ytdlFatherproc');
-const child   = require('../server/processhandle/ytdlChildproc');
+// const build  = require('../server/processhandle/ytdlFatherproc');
+const YouTubeParser = require('../youtubeclasses/youtubebasic');
 
 
 var app = express();
@@ -35,28 +36,59 @@ app.get('/', (req, res) => {
 
 
 app.get('/songs', function (req, res) { 
-    var url = req.query.url;
+    let url = req.query.url;
+    let video = new YouTubeParser(url);
+    
+    if(video.YouTubeValidateURL(url) == true){//handler to add if video exists
 
-    res.header('Content-Disposition', 'attachment; filename="video.mp3"');
-    res.set({ "Content-Type": "audio/mpeg" });
+        video.YouTubeGetInfo()
+        .then((message) => {    //.catch to add and length checker
+            console.log(message.videoDetails.title);
+            console.log(message.videoDetails.lengthSeconds); 
 
-    // Send compressed audio mp3 data
-    ffmpeg()
-    .input(ytdl(url))
-    .audioCodec('libmp3lame')
-    .toFormat('mp3')
-    .pipe(res, {end:true});
+            // let title = message.videoDetails.title.replace(/\s/g, '_');
+            // Regex resolve
+            
+            res.header('Content-Disposition', `attachment; filename="${message.videoDetails.title.replace(/\s?$/,'').replace(/\s/g, '_')}".mp3`);
+            res.set({ "Content-Type": "audio/mpeg" });
+        
+            // Send compressed audio mp3 data
+            ffmpeg()
+            .input(ytdl(url))
+            .audioCodec('libmp3lame')
+            .toFormat('mp3')
+            .on('error', function(err,stdout,stderr) {
+                console.log('an error happened: ' + err.message);
+                console.log('ffmpeg stdout: ' + stdout);
+                console.log('ffmpeg stderr: ' + stderr);
+            })
+            .on('end', function() {
+                console.log('Processing finished !');
+            })
+            .pipe(res, {end:true});
+        });
+    }
 }); 
 
 
 app.get('/videos', function (req, res) { 
-    var url = req.query.url;
-    res.header('Content-Disposition', 'attachment; filename="video.mp4"');
+    let url = req.query.url;
+    let video = new YouTubeParser(url);
     
-    ytdl(url, {format: 'mp4'}).pipe(res);
+    if(video.YouTubeValidateURL(url) == true){//handler to add if video exists
+
+        video.YouTubeGetInfo()
+        .then((message) => {    //.catch to add and length checker
+            console.log(message.videoDetails.title);
+            console.log(message.videoDetails.lengthSeconds); 
+            
+            res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp4`);
+        
+            ytdl(url, {format: 'mp4'}).pipe(res);
+            
+        });
+    }
 }); 
 
 
   
-
-
