@@ -7,12 +7,15 @@ let mp4    = document.querySelector('#mp4');
 let url    = document.querySelector('#url');
 
 
-//Path of final youtube url
+//Path of final youtube url, globally; why not though?
 var path;
 
 
-// AJAX
-submit.addEventListener('click', function(){
+// Event listener
+submit.addEventListener('click', function(event){
+
+    event.preventDefault();
+
     if(url){   
         if(validateYouTubeUrl(url.value) === false){
             return;

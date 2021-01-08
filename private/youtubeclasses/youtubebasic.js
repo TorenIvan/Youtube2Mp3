@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core');
 const { getInfo } = require('ytdl-core');
 
- class YouTubeParser {
+ export default class YouTubeParser {
 
   //constructor
   constructor(url){
@@ -54,20 +54,20 @@ const { getInfo } = require('ytdl-core');
 
 //Example usage
 
-let kana = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+// let kana = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
 
 // console.log(kana.YouTubeGetID());
 // console.log(kana.YouTubeGetID());
 // console.log(kana.YouTubeValidateURL());
 // console.log(kana.YouTubeValidateId());
 
-kana.YouTubeGetInfo()
-.then((message) => {
-  console.log(message.videoDetails.title);
-  console.log(message.videoDetails.lengthSeconds);
-}).catch((_message) => {
-  console.log('somethig is sooooo wrong');
-});
+// kana.YouTubeGetInfo()
+// .then((message) => {
+//   console.log(message.videoDetails.title);
+//   console.log(message.videoDetails.lengthSeconds);
+// }).catch((_message) => {
+//   console.log('somethig is sooooo wrong');
+// });
 
 
 
