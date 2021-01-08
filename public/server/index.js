@@ -2,18 +2,20 @@
 
 const express = require('express'); 
 
-const URL = require('url');
-const fs = require('fs');
+// const URL = require('url');
+// const fs = require('fs');
 const cors = require('cors');
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
+const helmet = require("helmet");
+const path = require('path');
+
 
 var app = express();  
 var PORT = process.env.PORT || 5005; 
  
-const path = require('path');
-
 app.use(cors());
+app.use(helmet());
 
 app.use(express.static(path.join(__dirname, '../../')));
 
