@@ -12,7 +12,8 @@ header{
 }
 
 header p{
-    font-size: 55px;
+    /* font-size: 55px; */
+    font-size: 3.4375em;
     font-style: italic;
     color: floralwhite;
 }
@@ -37,7 +38,8 @@ header p{
     margin-bottom: 1%;
     text-emphasis: none;
     text-align: left;
-    font-size: 23px;
+    /* font-size: 23px; */
+    font-size: 1.4375em;
 }
 
 #converter{
@@ -114,3 +116,78 @@ header p{
     background-color: transparent;
 }
 
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 1002px) {
+    #container{
+        margin: auto;
+        width: 60%;
+        padding-bottom: 3%;
+        padding-top: 0.5625em;
+        padding-left: 1%;
+        padding-right: 1%;
+        background-color:#01352a;
+        opacity: 1.0;
+        border-radius: 15px;
+        height: 9.475em;
+        display: table;
+    }
+  }
+
+@media screen and (max-width: 676px) {
+    #container{
+        margin: auto;
+        width: 95%;
+        padding-bottom: 3%;
+        padding-top: 0.5625em;
+        padding-left: 1%;
+        padding-right: 1%;
+        background-color:#01352a;
+        opacity: 1.0;
+        border-radius: 15px;
+        height: 9.475em;
+        display: table;
+    }
+  }
+
+@media screen and (max-width: 442px) {
+    #container{
+        margin: auto;
+        width: 95%;
+        padding-bottom: 3%;
+        padding-top: 0.5625em;
+        padding-left: 1%;
+        padding-right: 1%;
+        background-color:#01352a;
+        opacity: 1.0;
+        border-radius: 15px;
+        height: 9.475em;
+        display: table;
+    }
+
+    #container p{
+        margin: 0%;
+        color: wheat;
+        margin-bottom: 1%;
+        text-emphasis: none;
+        text-align: left;
+        font-size: 1.2375em;
+    }
+}
+
+@media screen and (max-width: 378px) {
+    #container p{
+        margin: 0%;
+        color: wheat;
+        margin-bottom: 1%;
+        text-emphasis: none;
+        text-align: left;
+        font-size: 1.1375em;
+    }
+
+    #converter #form{
+        margin: 0 auto;
+        padding-right: 0.5em;
+        -webkit-padding-end: 0.5em;
+        
+    }
+}
