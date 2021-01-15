@@ -12,7 +12,6 @@ header{
 }
 
 header p{
-    /* font-size: 55px; */
     font-size: 3.4375em;
     font-style: italic;
     color: floralwhite;
@@ -38,7 +37,6 @@ header p{
     margin-bottom: 1%;
     text-emphasis: none;
     text-align: left;
-    /* font-size: 23px; */
     font-size: 1.4375em;
 }
 
@@ -181,7 +179,7 @@ header p{
         margin-bottom: 1%;
         text-emphasis: none;
         text-align: left;
-        font-size: 1.1375em;
+        font-size: 1.1795em;
     }
 
     #converter #form{
