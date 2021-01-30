@@ -8,7 +8,7 @@ let url    = document.querySelector('#url');
 
 
 //Path of final youtube url, globally; why not though?
-var path;
+var path = 'http://localhost:5005/';
 
 
 // Event listener
@@ -23,11 +23,11 @@ submit.addEventListener('click', function(event){
     }
 
     if(mp3.classList.contains("active")){
-        path = "http://localhost:5005/songs?url=" + url.value;
+        path += '/songs?url=' + url.value;
     }
 
     if(mp4.classList.contains("active")){
-        path = "http://localhost:5005/videos?url=" + url.value;
+        path += '/videos?url=' + url.value;
     }
 
     // window.open(path,"_blank");

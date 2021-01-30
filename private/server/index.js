@@ -46,7 +46,7 @@ app.get('/songs', function (req, res) {
             console.log(message.videoDetails.title);
             console.log(message.videoDetails.lengthSeconds); 
 
-            // let title = message.videoDetails.title.replace(/\s/g, '_');
+            let title = message.videoDetails.title.replace(/\s/g, '');
             // Regex resolve
             
             res.header('Content-Disposition', `attachment; filename="${message.videoDetails.title.replace(/\s?$/,'').replace(/\s/g, '_')}".mp3`);
