@@ -1,22 +1,27 @@
 import {validateYouTubeUrl} from '/js/validator.js';
+import loading              from '/js/loading.js';
+
 
 // Selecting elements from DOM
 let submit = document.querySelector('#submit');
 let mp3    = document.querySelector('#mp3');
 let mp4    = document.querySelector('#mp4');
 let url    = document.querySelector('#url');
+let loader = document.querySelector('#loader');
 
 
 //Path of final youtube url, globally; why not though?
 var path;
 
+//Hide the loading element
+loader.style.display = 'none';
 
 // Event listener
 submit.addEventListener('click', function(event){
 
     event.preventDefault();
 
-    domLoadingButton();
+    loading();
 
     if(url){   
         if(validateYouTubeUrl(url.value) === false){
