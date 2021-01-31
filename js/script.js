@@ -16,6 +16,8 @@ submit.addEventListener('click', function(event){
 
     event.preventDefault();
 
+    domLoadingButton();
+
     if(url){   
         if(validateYouTubeUrl(url.value) === false){
             return;
@@ -30,7 +32,19 @@ submit.addEventListener('click', function(event){
         path = "http://localhost:5005/videos?url=" + url.value;
     }
 
-    // window.open(path,"_blank");
-    window.location.href = path;
-
+    //trigger download using fetch, (other ways: 1.window.open(path,"_blank");   2.window.location.href = path;   but needed to keep information)
+    fetch(path,{
+        method: 'GET'
+    })
+    .then(res => {
+        let filename = res.headers.get('Content-Disposition').split('filename=')[1];
+        let type     = res.headers.get('Content-Disposition').split('.')[1];
+        res.blob().then(blob => {
+            let link      = document.createElement("a");
+            link.href     = window.URL.createObjectURL(blob);
+            link.download = filename || "video." + type;
+            link.click();
+            window.URL.revokeObjectURL(link.href);
+        })
+    })
 });
