@@ -1,4 +1,4 @@
-export function validateYouTubeUrl(url) {    
+export default function validateYouTubeUrl(url) {    
     if (url != undefined || url != '') {        
         var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
         var match = url.match(regExp);

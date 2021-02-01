@@ -19,8 +19,8 @@
             <p>Please insert a valid YouTube link</p> 
             <div id="converter">
                 <form id="form">
-                    <input type="url" id="url" name="url" placeholder="Your link here..." pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?">      
-                    <div id="loader">converting</div>
+                    <input type="url" id="url" name="url" placeholder="Your link here..." pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?" required>      
+                    <div id="loader" class="hidden"></div>
                 </form> 
             </div>
             <div id="button-container">

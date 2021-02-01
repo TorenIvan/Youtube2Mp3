@@ -174,10 +174,12 @@ header p{
 
 
 /* loader */
-.loader {
-  border: 1rem solid #0a4137;;
+.hidden { display: none; }
+
+#loader {
+  border: 0.5rem solid #0a4137;;
   border-radius: 50%;
-  border-top: 1rem solid #aab8c2;
+  border-top: 0.5rem solid #aab8c2;
   width: 2rem;
   height: 2rem;
   margin: 0 auto;
