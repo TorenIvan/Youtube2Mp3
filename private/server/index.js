@@ -7,10 +7,8 @@ const ffmpeg  = require('fluent-ffmpeg');
 const helmet  = require("helmet");
 const path    = require('path');
 const contentDisposition = require('content-disposition')
-// const proc    = require('child_process');
 
 // Custom requires
-// const build  = require('../server/processhandle/ytdlFatherproc');
 const YouTubeParser = require('../youtubeclasses/youtubebasic');
 
 
@@ -83,7 +81,7 @@ app.get('/videos', function (req, res) {
             console.log(message.videoDetails.lengthSeconds); 
             
             // res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp4`);
-            let title = `${message.videoDetails.title}.mp4`;
+            let title = `${message.videoDetails.title}`.replace(/[^a-zA-Z]/gm," ").replace(/\s*$/,'') + '.mp4';
             
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "audio/mpeg" });

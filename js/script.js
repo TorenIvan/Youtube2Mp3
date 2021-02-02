@@ -6,7 +6,6 @@ let submit = document.querySelector('#submit');
 let mp3    = document.querySelector('#mp3');
 let mp4    = document.querySelector('#mp4');
 let url    = document.querySelector('#url');
-// let loader = document.querySelector('#loader');
 
 //Hide the loading element
 hiding();
@@ -62,6 +61,4 @@ submit.addEventListener('click', function(event){
         .catch(res => console.log(res))
     })
     .catch(res => console.log(res))
-    // window.location.href = path;
-    // endloading();
 });
