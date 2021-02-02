@@ -6,6 +6,7 @@ const ytdl    = require('ytdl-core');
 const ffmpeg  = require('fluent-ffmpeg');
 const helmet  = require("helmet");
 const path    = require('path');
+const contentDisposition = require('content-disposition')
 // const proc    = require('child_process');
 
 // Custom requires
@@ -46,12 +47,10 @@ app.get('/songs', function (req, res) {
             console.log(message.videoDetails.title);
             console.log(message.videoDetails.lengthSeconds); 
 
-            /*let title = message.videoDetails.title.replace(/\s/g, '_');*/
-            //let title = message.videoDetails.title.replace(/\s?$/,'').replace(/\s/g, '_');
-            // Regex resolve
+            let title = `${message.videoDetails.title}`.replace(/[^a-zA-Z]/gm," ").replace(/\s*$/,'') + '.mp3';
             
-            res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp3`);
-            res.set({ "Content-Type": "audio/mpeg" });
+            res.set('Content-Disposition', contentDisposition(title));
+            res.header({ "Content-Type": "audio/mpeg" });
         
             // Send compressed audio mp3 data
             ffmpeg()
@@ -83,7 +82,11 @@ app.get('/videos', function (req, res) {
             console.log(message.videoDetails.title);
             console.log(message.videoDetails.lengthSeconds); 
             
-            res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp4`);
+            // res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp4`);
+            let title = `${message.videoDetails.title}.mp4`;
+            
+            res.set('Content-Disposition', contentDisposition(title));
+            res.header({ "Content-Type": "audio/mpeg" });
         
             ytdl(url, {format: 'mp4'}).pipe(res);
             

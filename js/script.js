@@ -62,4 +62,6 @@ submit.addEventListener('click', function(event){
         .catch(res => console.log(res))
     })
     .catch(res => console.log(res))
+    // window.location.href = path;
+    // endloading();
 });
