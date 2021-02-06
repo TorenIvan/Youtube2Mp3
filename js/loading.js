@@ -6,7 +6,6 @@ function loading(){
 
     uri.style.display    = "none";
     loader.style.display = "";
-    console.log('loading');
 }
 
 
@@ -18,7 +17,6 @@ function endloading(){
 
     uri.style.display    = "";
     loader.style.display = "none"; 
-    console.log('endloading');
 }
 
 function hiding(){

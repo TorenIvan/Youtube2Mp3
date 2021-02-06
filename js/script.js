@@ -39,26 +39,45 @@ submit.addEventListener('click', function(event){
         path += "videos?url=" + url.value;
     }
 
-    //trigger download using fetch, (other ways: 1.window.open(path,"_blank");   2.window.location.href = path;   but needed to keep information)
-    fetch(path,{                                                                        //request options
-        method: 'GET'
-    })
-    .then(res => {
-        let filename = res.headers.get('Content-Disposition').split('filename=')[1];    //get filename from response header
-        let type     = res.headers.get('Content-Disposition').split('.')[1];            //get option from response header
-        console.log(filename);
-        res.blob()                                                                      //return a blob
-        .then(blob => {
-            console.log('mpika');
-            let link      = document.createElement("a");
-            link.href     = window.URL.createObjectURL(blob);
-            link.download = filename || "video." + type;
-            link.click();
-            window.URL.revokeObjectURL(link.href);
-            link.remove();
-            endloading();
-        })
-        .catch(res => console.log(res))
-    })
-    .catch(res => console.log(res))
+    //xhr to send the request, get the response, trigger download
+    let xhr = new XMLHttpRequest();                                                     //create a new xhr object
+
+    //listener, when the request completes successfully, alternatively onreadystatechange
+    xhr.onload = () => {
+        // 4: request finished and response is ready,   200: "OK"
+        if (xhr.readyState === 4 && xhr.status === 200) {                               
+            //get infos from response header
+            let filename    = xhr.getResponseHeader('Content-Disposition').split('filename=')[1]; 
+            let filetype    = xhr.getResponseHeader('Content-Disposition').split('.')[1];        
+            let contenttype = xhr.getResponseHeader('Content-Type');
+
+            let blob = new Blob([xhr.response], {type: contenttype});
+
+            if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                window.navigator.msSaveBlob(blob, filename);
+            } else {
+                let URL = window.URL || window.webkitURL;
+                let downloadUrl = URL.createObjectURL(blob);
+                // use HTML5 a[download] attribute to specify filename
+                let a = document.createElement("a");
+                // safari doesn't support this yet
+                if (typeof a.download === 'undefined') {
+                    window.location = downloadUrl;
+                } else {
+                    a.href = downloadUrl;
+                    a.download = filename || "video." + filetype;
+                    document.body.appendChild(a);
+                    a.click();
+                }
+                endloading();
+                setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+            }
+        }
+    }
+
+    xhr.open('GET', path);                                                          //prepares the http request to be sent
+    xhr.responseType = 'arraybuffer';                                               //fixed-length raw binary data buffer
+    xhr.send();                                                                     //sent the request
+
 });

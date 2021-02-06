@@ -84,7 +84,7 @@ app.get('/videos', function (req, res) {
             let title = `${message.videoDetails.title}`.replace(/[^a-zA-Z]/gm," ").replace(/\s*$/,'') + '.mp4';
             
             res.set('Content-Disposition', contentDisposition(title));
-            res.header({ "Content-Type": "audio/mpeg" });
+            res.header({ "Content-Type": "video/mp4" });
         
             ytdl(url, {format: 'mp4'}).pipe(res);
             
