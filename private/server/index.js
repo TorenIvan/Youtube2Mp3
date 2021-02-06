@@ -6,7 +6,8 @@ const ytdl    = require('ytdl-core');
 const ffmpeg  = require('fluent-ffmpeg');
 const helmet  = require("helmet");
 const path    = require('path');
-const contentDisposition = require('content-disposition')
+const contentDisposition = require('content-disposition');
+const ffmpegOnProgress = require('ffmpeg-on-progress');
 
 // Custom requires
 const YouTubeParser = require('../youtubeclasses/youtubebasic');
@@ -27,7 +28,11 @@ app.listen(PORT, function(err){
     console.log("Server listening on PORT", PORT); 
 });
 
-
+const logProgress = (progress, event) => {
+    // progress is a floating point number from 0 to 1
+    console.log('progress', (progress * 100).toFixed())
+  }
+const durationEstimate = 4000
 
 app.get('/', (req, res) => { 
     res.sendFile('../../index.html');
@@ -45,16 +50,18 @@ app.get('/songs', function (req, res) {
             console.log(message.videoDetails.title);
             console.log(message.videoDetails.lengthSeconds); 
 
-            let title = `${message.videoDetails.title}`.replace(/[^a-zA-Z]/gm," ").replace(/\s*$/,'') + '.mp3';
-            
+            let title = `${message.videoDetails.title}`;
+            title     =  encodeRFC5987ValueChars(title) + ".mp3"
+
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "audio/mpeg" });
         
             // Send compressed audio mp3 data
             ffmpeg()
-            .input(ytdl(url))
+            .input(ytdl(url, {quality: 'highestaudio'}))
             .audioCodec('libmp3lame')
             .toFormat('mp3')
+            .on('progress', ffmpegOnProgress(logProgress, durationEstimate))
             .on('error', function(err,stdout,stderr) {
                 console.log('an error happened: ' + err.message);
                 console.log('ffmpeg stdout: ' + stdout);
@@ -80,17 +87,30 @@ app.get('/videos', function (req, res) {
             console.log(message.videoDetails.title);
             console.log(message.videoDetails.lengthSeconds); 
             
-            // res.header('Content-Disposition', `attachment; filename=${message.videoDetails.title}.mp4`);
-            let title = `${message.videoDetails.title}`.replace(/[^a-zA-Z]/gm," ").replace(/\s*$/,'') + '.mp4';
+            let title = `${message.videoDetails.title}`;
+            title     =  encodeRFC5987ValueChars(title) + ".mp4"
             
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "video/mp4" });
-        
-            ytdl(url, {format: 'mp4'}).pipe(res);
+
+            ytdl(url, {quality: 'highestaudio', format: 'mp4'})
+            .pipe(res);
             
         });
     }
 }); 
+
+
+function encodeRFC5987ValueChars (str) {
+    return encodeURIComponent(str).
+        // Note that although RFC3986 reserves "!", RFC5987 does not,
+        // so we do not need to escape it
+        replace(/['()]/g, escape). // i.e., %27 %28 %29
+        replace(/\*/g, '%2A').
+            // The following are not required for percent-encoding per RFC5987, 
+            // so we can allow for a little better readability over the wire: |`^
+            replace(/%(?:7C|60|5E)/g, unescape);
+}
 
 
   

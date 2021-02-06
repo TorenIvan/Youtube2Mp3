@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "cryptiles": "^4.1.3",
     "express": "^4.17.1",
+    "ffmpeg-on-progress": "^1.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "get-youtube-title": "^1.0.1",
     "helmet": "^4.4.1",

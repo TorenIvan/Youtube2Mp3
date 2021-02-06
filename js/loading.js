@@ -1,4 +1,4 @@
-function loading(){
+function initLoader(){
     var loader = document.getElementById('loader');         
     var uri    = document.getElementById('url');
 
@@ -9,7 +9,7 @@ function loading(){
 }
 
 
-function endloading(){
+function endLoader(){
     var loader = document.getElementById('loader');         
     var uri    = document.getElementById('url');
 
@@ -19,9 +19,9 @@ function endloading(){
     loader.style.display = "none"; 
 }
 
-function hiding(){
+function hideLoader(){
     var loader = document.getElementById('loader');         
     if(loader.className = "hidden") loader.classList.remove('hidden');
 }
 
-export {loading, endloading, hiding}
+export {initLoader, endLoader, hideLoader}

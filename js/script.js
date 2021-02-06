@@ -1,5 +1,5 @@
 import  validateYouTubeUrl  from '/js/validator.js';
-import {loading,endloading,hiding} from '/js/loading.js';
+import {initLoader,endLoader,hideLoader} from '/js/loading.js';
 
 // Selecting elements from DOM
 let submit = document.querySelector('#submit');
@@ -8,8 +8,8 @@ let mp4    = document.querySelector('#mp4');
 let url    = document.querySelector('#url');
 
 //Hide the loading element
-hiding();
-endloading();
+hideLoader();
+endLoader();
 
 // Event listener
 submit.addEventListener('click', function(event){
@@ -21,10 +21,10 @@ submit.addEventListener('click', function(event){
         if (url.checkValidity()) event.preventDefault();
         else return;                                                                    //check html5 validations and the prevent default
                                                                                         
-        loading();                                                                      //change the css, to show that it's converting
+        initLoader();                                                                      //change the css, to show that it's converting
      
         if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, else popup and return
-            endloading();               
+            endLoader();               
             window.alert('eeerrprr')                  
             return;         
         }                    
@@ -44,10 +44,12 @@ submit.addEventListener('click', function(event){
 
     //listener, when the request completes successfully, alternatively onreadystatechange
     xhr.onload = () => {
+        console.log('kipos'); 
         // 4: request finished and response is ready,   200: "OK"
-        if (xhr.readyState === 4 && xhr.status === 200) {                               
+        if (xhr.readyState === 4 && xhr.status === 200) { 
+            console.log('ee');                              
             //get infos from response header
-            let filename    = xhr.getResponseHeader('Content-Disposition').split('filename=')[1]; 
+            let filename    = decodeURIComponent(xhr.getResponseHeader('Content-Disposition').split("filename=")[1]).split(";")[0]; 
             let filetype    = xhr.getResponseHeader('Content-Disposition').split('.')[1];        
             let contenttype = xhr.getResponseHeader('Content-Type');
 
@@ -57,6 +59,7 @@ submit.addEventListener('click', function(event){
                 // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
                 window.navigator.msSaveBlob(blob, filename);
             } else {
+                console.log('kekala'); 
                 let URL = window.URL || window.webkitURL;
                 let downloadUrl = URL.createObjectURL(blob);
                 // use HTML5 a[download] attribute to specify filename
@@ -70,7 +73,7 @@ submit.addEventListener('click', function(event){
                     document.body.appendChild(a);
                     a.click();
                 }
-                endloading();
+                endLoader();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
                 url.value = '';
             }
