@@ -72,6 +72,7 @@ submit.addEventListener('click', function(event){
                 }
                 endloading();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+                url.value = '';
             }
         }
     }
@@ -79,5 +80,10 @@ submit.addEventListener('click', function(event){
     xhr.open('GET', path);                                                          //prepares the http request to be sent
     xhr.responseType = 'arraybuffer';                                               //fixed-length raw binary data buffer
     xhr.send();                                                                     //sent the request
+
+    //To do's:
+        // 1) filename regex
+        // 2) error popup based on error
+        // 3) load process
 
 });
