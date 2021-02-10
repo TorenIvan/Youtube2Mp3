@@ -58,10 +58,25 @@ app.get('/songs', function (req, res) {
         
             // Send compressed audio mp3 data
             ffmpeg()
-            .input(ytdl(url, {quality: 'highestaudio'}))
+            .input(
+                ytdl(url, {quality: 'highest'})
+                .on('response', function(res) {
+                    var totalSize = res.headers['content-length'];
+                    var dataRead = 0;
+                    res.on('data', function(data) {
+                      dataRead += data.length;
+                      var percent = dataRead / totalSize;
+                      process.stdout.cursorTo(0);
+                      process.stdout.clearLine(1);
+                      process.stdout.write((percent * 100).toFixed(2) + '% ');
+                    })
+                    res.on('end', function() {
+                      process.stdout.write('\n');
+                    })
+                })
+            )
             .audioCodec('libmp3lame')
             .toFormat('mp3')
-            .on('progress', ffmpegOnProgress(logProgress, durationEstimate))
             .on('error', function(err,stdout,stderr) {
                 console.log('an error happened: ' + err.message);
                 console.log('ffmpeg stdout: ' + stdout);
@@ -93,9 +108,22 @@ app.get('/videos', function (req, res) {
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "video/mp4" });
 
-            ytdl(url, {quality: 'highestaudio', format: 'mp4'})
+            ytdl(url, {quality: 'highest'})
+            .on('response', function(res) {
+                var totalSize = res.headers['content-length'];
+                var dataRead = 0;
+                res.on('data', function(data) {
+                  dataRead += data.length;
+                  var percent = dataRead / totalSize;
+                  process.stdout.cursorTo(0);
+                  process.stdout.clearLine(1);
+                  process.stdout.write((percent * 100).toFixed(2) + '% ');
+                })
+                res.on('end', function() {
+                  process.stdout.write('\n');
+                })
+            })
             .pipe(res);
-            
         });
     }
 }); 

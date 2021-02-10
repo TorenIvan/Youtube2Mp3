@@ -85,8 +85,7 @@ submit.addEventListener('click', function(event){
     xhr.send();                                                                     //sent the request
 
     //To do's:
-        // 1) filename regex
-        // 2) error popup based on error
-        // 3) load process
+        // 1) error popup based on error
+        // 2) load process
 
 });
