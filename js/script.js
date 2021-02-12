@@ -1,5 +1,6 @@
+// import io from 'socket.io-client';
+import * as loader from '/js/loading.js';
 import  validateYouTubeUrl  from '/js/validator.js';
-import {initLoader,endLoader,hideLoader} from '/js/loading.js';
 
 // Selecting elements from DOM
 let submit = document.querySelector('#submit');
@@ -7,9 +8,13 @@ let mp3    = document.querySelector('#mp3');
 let mp4    = document.querySelector('#mp4');
 let url    = document.querySelector('#url');
 
+// Declare socket -> connect
+let socket = io();
+console.log('connected');
+
 //Hide the loading element
-hideLoader();
-endLoader();
+loader.hideLoader();
+loader.endLoader();
 
 // Event listener
 submit.addEventListener('click', function(event){
@@ -21,7 +26,7 @@ submit.addEventListener('click', function(event){
         if (url.checkValidity()) event.preventDefault();
         else return;                                                                    //check html5 validations and the prevent default
                                                                                         
-        initLoader();                                                                      //change the css, to show that it's converting
+        loader.initLoader();                                                                   //change the css, to show that it's converting
      
         if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, else popup and return
             endLoader();               
@@ -38,6 +43,10 @@ submit.addEventListener('click', function(event){
     if(mp4.classList.contains("active")){
         path += "videos?url=" + url.value;
     }
+
+    //initializing progress
+    console.log('initializing');
+   
 
     //xhr to send the request, get the response, trigger download
     let xhr = new XMLHttpRequest();                                                     //create a new xhr object
@@ -73,7 +82,7 @@ submit.addEventListener('click', function(event){
                     document.body.appendChild(a);
                     a.click();
                 }
-                endLoader();
+                loader.endLoader();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
                 url.value = '';
             }
@@ -84,8 +93,12 @@ submit.addEventListener('click', function(event){
     xhr.responseType = 'arraybuffer';                                               //fixed-length raw binary data buffer
     xhr.send();                                                                     //sent the request
 
+    //get the download progress via socket
+    socket.on('message', (msg) => {
+        console.log('message: ' + msg);
+    });
     //To do's:
         // 1) error popup based on error
-        // 2) load process
-
+        // 2) show loading process
+        // 3) handle corrupted files links -> https://www.youtube.com/watch?v=3tK9qIdoJ6I
 });

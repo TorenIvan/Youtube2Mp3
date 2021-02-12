@@ -1,44 +1,50 @@
+//"strict mode" -> ECMAScript and above
 'use strict';
 
-const express = require('express'); 
-const cors    = require('cors');
-const ytdl    = require('ytdl-core');
-const ffmpeg  = require('fluent-ffmpeg');
-const helmet  = require("helmet");
-const path    = require('path');
+//require modules
+const express            = require('express'); 
+const http               = require('http');
+const Socket             = require('socket.io');
+const cors               = require('cors');
+const ytdl               = require('ytdl-core');
+const ffmpeg             = require('fluent-ffmpeg');
 const contentDisposition = require('content-disposition');
-const ffmpegOnProgress = require('ffmpeg-on-progress');
+const helmet             = require("helmet");
+const path               = require('path');
+//custom requires
+const YouTubeParser      = require('../youtubeclasses/youtubebasic');
 
-// Custom requires
-const YouTubeParser = require('../youtubeclasses/youtubebasic');
+//create express app -> server(from app) -> socket(attached to server) -> port(from-environment or 5005)
+const app     = express();
+const server  = http.createServer(app); 
+const io      = Socket(server);
+const PORT    = process.env.PORT || 5005; 
 
-
-var app = express();
-var PORT = process.env.PORT || 5005; 
-
-// Middleware usage
-app.use(cors());
-app.use(helmet());
-
-app.use(express.static(path.join(__dirname, '../../')));
-
-
-app.listen(PORT, function(err){ 
+//server listen to port
+server.listen(PORT, function(err){ 
     if (err) console.log(err); 
     console.log("Server listening on PORT", PORT); 
 });
 
-const logProgress = (progress, event) => {
-    // progress is a floating point number from 0 to 1
-    console.log('progress', (progress * 100).toFixed())
-  }
-const durationEstimate = 4000
+//connect to socket
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
 
+//path to serve static files
+app.use(express.static(path.join(__dirname, '../../')));
+
+//request to homepage
 app.get('/', (req, res) => { 
     res.sendFile('../../index.html');
 });
 
+//middleware usage
+app.use(cors());            //to enable all CORS(Cross-Origin Resource Sharing) requests
+app.use(helmet());          //to secure the Express app by setting various HTTP headers
 
+
+//Main Usage
 app.get('/songs', function (req, res) { 
     let url = req.query.url;
     let video = new YouTubeParser(url);
@@ -68,7 +74,9 @@ app.get('/songs', function (req, res) {
                       var percent = dataRead / totalSize;
                       process.stdout.cursorTo(0);
                       process.stdout.clearLine(1);
-                      process.stdout.write((percent * 100).toFixed(2) + '% ');
+                      var message = (percent * 100).toFixed(2) + '% ';
+                      process.stdout.write(message);
+                      io.emit('message', message);
                     })
                     res.on('end', function() {
                       process.stdout.write('\n');
@@ -113,11 +121,13 @@ app.get('/videos', function (req, res) {
                 var totalSize = res.headers['content-length'];
                 var dataRead = 0;
                 res.on('data', function(data) {
-                  dataRead += data.length;
-                  var percent = dataRead / totalSize;
-                  process.stdout.cursorTo(0);
-                  process.stdout.clearLine(1);
-                  process.stdout.write((percent * 100).toFixed(2) + '% ');
+                    dataRead += data.length;
+                    var percent = dataRead / totalSize;
+                    process.stdout.cursorTo(0);
+                    process.stdout.clearLine(1);
+                    var message = (percent * 100).toFixed(2) + '% ';
+                    process.stdout.write(message);
+                    io.emit('message', message);
                 })
                 res.on('end', function() {
                   process.stdout.write('\n');
