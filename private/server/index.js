@@ -11,6 +11,7 @@ const ffmpeg             = require('fluent-ffmpeg');
 const contentDisposition = require('content-disposition');
 const helmet             = require("helmet");
 const path               = require('path');
+const readline = require('readline');
 //custom requires
 const YouTubeParser      = require('../youtubeclasses/youtubebasic');
 
@@ -115,14 +116,19 @@ app.get('/videos', function (req, res) {
             
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "video/mp4" });
-
+            console.log('edwsa');
             ytdl(url, {quality: 'highest'})
             .on('response', function(res) {
                 var totalSize = res.headers['content-length'];
+                console.log('mpikkakskaa');
                 var dataRead = 0;
                 res.on('data', function(data) {
                     dataRead += data.length;
                     var percent = dataRead / totalSize;
+                   // console.log('totalSize ' + totalSize);
+                   // console.log('dataRead ' + dataRead);
+                   // console.log('datLength '+ data.length);
+                   // console.log('percent ' + percent);
                     process.stdout.cursorTo(0);
                     process.stdout.clearLine(1);
                     var message = (percent * 100).toFixed(2) + '% ';
@@ -130,7 +136,8 @@ app.get('/videos', function (req, res) {
                     io.emit('message', message);
                 })
                 res.on('end', function() {
-                  process.stdout.write('\n');
+                    console.log('gt etsi?');
+                    process.stdout.write('\n');
                 })
             })
             .pipe(res);

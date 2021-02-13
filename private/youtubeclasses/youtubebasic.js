@@ -56,7 +56,7 @@ module.exports = YouTubeParser;
 
 //Example usage
 
-// let kana = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+// let kana = new YouTubeParser('https://www.youtube.com/watch?v=3tK9qIdoJ6I');
 
 // console.log(kana.YouTubeGetID());
 // console.log(kana.YouTubeGetID());
@@ -65,8 +65,9 @@ module.exports = YouTubeParser;
 
 // kana.YouTubeGetInfo()
 // .then((message) => {
-//   console.log(message.videoDetails.title);
-//   console.log(message.videoDetails.lengthSeconds);
+//   console.log(message.videoDetails);
+ // console.log(message.videoDetails.title);
+  //console.log(message.videoDetails.lengthSeconds);
 // }).catch((_message) => {
 //   console.log('somethig is sooooo wrong');
 // });

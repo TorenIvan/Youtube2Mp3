@@ -99,6 +99,6 @@ submit.addEventListener('click', function(event){
     });
     //To do's:
         // 1) error popup based on error
-        // 2) show loading process
+        // 2) show loading process (client side)
         // 3) handle corrupted files links -> https://www.youtube.com/watch?v=3tK9qIdoJ6I
 });
