@@ -62,28 +62,32 @@ app.get('/songs', function (req, res) {
 
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "audio/mpeg" });
+
+            let stream = ytdl(url, {filter: 'audioandvideo', quality: 'highestvideo'});
+            let starttime;
+            // stream.pipe(res);    
+            stream.once('response', () => {
+                starttime = Date.now();
+            });
+            stream.on('progress', (chunkLength, downloaded, total) => {
+                const percent = downloaded / total;
+                const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
+                const estimatedDownloadTime = (downloadedMinutes / percent) - downloadedMinutes;
+                readline.cursorTo(process.stdout, 0);
+                process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded `);
+                process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`);
+                process.stdout.write(`running for: ${downloadedMinutes.toFixed(2)}minutes`);
+                process.stdout.write(`, estimated time left: ${estimatedDownloadTime.toFixed(2)}minutes `);
+                readline.moveCursor(process.stdout, 0, -1);
+                io.emit('message', `${(percent * 100).toFixed(2)}%`);
+            });
+            stream.on('end', () => {
+                process.stdout.write('\n\n');
+            });
         
-            // Send compressed audio mp3 data
+            // Send compressed audio data
             ffmpeg()
-            .input(
-                ytdl(url, {quality: 'highest'})
-                .on('response', function(res) {
-                    var totalSize = res.headers['content-length'];
-                    var dataRead = 0;
-                    res.on('data', function(data) {
-                      dataRead += data.length;
-                      var percent = dataRead / totalSize;
-                      process.stdout.cursorTo(0);
-                      process.stdout.clearLine(1);
-                      var message = (percent * 100).toFixed(2) + '% ';
-                      process.stdout.write(message);
-                      io.emit('message', message);
-                    })
-                    res.on('end', function() {
-                      process.stdout.write('\n');
-                    })
-                })
-            )
+            .input(stream)
             .audioCodec('libmp3lame')
             .toFormat('mp3')
             .on('error', function(err,stdout,stderr) {
@@ -116,38 +120,13 @@ app.get('/videos', function (req, res) {
             
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "video/mp4" });
-            console.log('edwsa');
-            // ytdl(url, {quality: 'highest'})
-            // .on('response', function(res) {
-            //     var totalSize = res.headers['content-length'];
-            //     console.log('mpikkakskaa');
-            //     var dataRead = 0;
-            //     res.on('data', function(data) {
-            //         dataRead += data.length;
-            //         var percent = dataRead / totalSize;
-            //        console.log('totalSize ' + totalSize);
-            //        console.log('dataRead ' + dataRead);
-            //        console.log('datLength '+ data.length);
-            //        console.log('percent ' + percent);
-            //         process.stdout.cursorTo(0);
-            //         process.stdout.clearLine(1);
-            //         var message = (percent * 100).toFixed(2) + '% ';
-            //         process.stdout.write(message);
-            //         io.emit('message', message);
-            //     // })
-            //     res.on('end', function() {
-            //         console.log('gt etsi?');
-            //         process.stdout.write('\n');
-            //     })
-            // })
-            // .pipe(res);
-            const video = ytdl(url, {quality: 'highest', format:'videoandaudio'});
+            let stream = ytdl(url, {filter: 'audioandvideo', quality: 'highestvideo'});
             let starttime;
-            video.pipe(res);    
-            video.once('response', () => {
+            stream.pipe(res);    
+            stream.once('response', () => {
                 starttime = Date.now();
             });
-            video.on('progress', (chunkLength, downloaded, total) => {
+            stream.on('progress', (chunkLength, downloaded, total) => {
                 const percent = downloaded / total;
                 const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
                 const estimatedDownloadTime = (downloadedMinutes / percent) - downloadedMinutes;
@@ -157,8 +136,9 @@ app.get('/videos', function (req, res) {
                 process.stdout.write(`running for: ${downloadedMinutes.toFixed(2)}minutes`);
                 process.stdout.write(`, estimated time left: ${estimatedDownloadTime.toFixed(2)}minutes `);
                 readline.moveCursor(process.stdout, 0, -1);
+                io.emit('message', `${(percent * 100).toFixed(2)}%`);
             });
-            video.on('end', () => {
+            stream.on('end', () => {
                 process.stdout.write('\n\n');
             });
         });
