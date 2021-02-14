@@ -66,8 +66,9 @@ module.exports = YouTubeParser;
 
 // yurl.YouTubeGetInfo()
 // .then((message) => {
-//   console.log(message.videoDetails.title);
-//   console.log(message.videoDetails.lengthSeconds);
+//   console.log(message.videoDetails);
+ // console.log(message.videoDetails.title);
+  //console.log(message.videoDetails.lengthSeconds);
 // }).catch((_message) => {
 //   console.log('somethig is sooooo wrong');
 // });
