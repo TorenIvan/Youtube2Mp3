@@ -98,6 +98,6 @@ submit.addEventListener('click', function(event){
     });
     
     //To do's:
-        // 1) error popup based on error + try catch
+        // 1) modal popup based on error + try catch
         // 2) show loading process (client side)
     });

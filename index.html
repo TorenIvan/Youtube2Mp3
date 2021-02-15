@@ -5,6 +5,7 @@
         <meta content="utf-8" http-equiv="encoding">        
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/prograssbar.css">
         <script type='text/javascript' src="js/buttons.js" async></script>
         <script type='module' src="js/script.js" async></script>
         <script type='module' src="socket.io/socket.io.js"></script>
@@ -21,6 +22,7 @@
             <div id="converter">
                 <form id="form">
                     <input type="url" id="url" name="url" placeholder="https://www.youtube.com/watch?v=hP6VM6YAMIE" pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?" required>      
+                    <div id="progress-bar" data-label="Converting..."></div>
                     <div id="loader" class="hidden"></div>
                 </form> 
             </div>
