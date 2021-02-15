@@ -56,7 +56,6 @@ submit.addEventListener('click', function(event){
         console.log('kipos'); 
         // 4: request finished and response is ready,   200: "OK"
         if (xhr.readyState === 4 && xhr.status === 200) { 
-            console.log('ee');                              
             //get infos from response header
             let filename    = decodeURIComponent(xhr.getResponseHeader('Content-Disposition').split("filename=")[1]).split(";")[0]; 
             let filetype    = xhr.getResponseHeader('Content-Disposition').split('.')[1];        
@@ -97,8 +96,8 @@ submit.addEventListener('click', function(event){
     socket.on('message', (msg) => {
         console.log('message: ' + msg);
     });
+    
     //To do's:
-        // 1) error popup based on error
+        // 1) error popup based on error + try catch
         // 2) show loading process (client side)
-        // 3) handle corrupted files links -> https://www.youtube.com/watch?v=3tK9qIdoJ6I
-});
+    });
