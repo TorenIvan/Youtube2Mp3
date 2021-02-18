@@ -1,5 +1,6 @@
 // import io from 'socket.io-client';
-import * as loader from '/js/loading.js';
+// import { endProgress } from './loading';
+import * as helper from '/js/loading.js';
 import  validateYouTubeUrl  from '/js/validator.js';
 
 // Selecting elements from DOM
@@ -13,23 +14,27 @@ let socket = io();
 console.log('connected');
 
 //Hide the loading element
-loader.hideLoader();
-loader.endLoader();
+helper.hideProgress();
+helper.endProgress();
 
 // Event listener
 submit.addEventListener('click', function(event){
+
+    helper.hideProgress();
+    helper.endProgress();
 
     var path = "http://localhost:5005/";                                                //path declaration and assign
 
     if(url){
         //Check Validations
-        if (url.checkValidity()) event.preventDefault();
-        else return;                                                                    //check html5 validations and the prevent default
+        if (!url.checkValidity()) return;
+        event.preventDefault();                                                     //check html5 validations and the prevent default
                                                                                         
-        loader.initLoader();                                                                   //change the css, to show that it's converting
+        helper.init();                                                                   //change the css, to show that it's converting
      
         if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, else popup and return
-            endLoader();               
+            // endLoader();  
+            endProgress();             
             window.alert('eeerrprr')                  
             return;         
         }                    
@@ -53,7 +58,6 @@ submit.addEventListener('click', function(event){
 
     //listener, when the request completes successfully, alternatively onreadystatechange
     xhr.onload = () => {
-        console.log('kipos'); 
         // 4: request finished and response is ready,   200: "OK"
         if (xhr.readyState === 4 && xhr.status === 200) { 
             //get infos from response header
@@ -67,7 +71,6 @@ submit.addEventListener('click', function(event){
                 // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
                 window.navigator.msSaveBlob(blob, filename);
             } else {
-                console.log('kekala'); 
                 let URL = window.URL || window.webkitURL;
                 let downloadUrl = URL.createObjectURL(blob);
                 // use HTML5 a[download] attribute to specify filename
@@ -81,7 +84,8 @@ submit.addEventListener('click', function(event){
                     document.body.appendChild(a);
                     a.click();
                 }
-                loader.endLoader();
+                // helper.endLoader();
+                helper.endProgress();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
                 url.value = '';
             }
@@ -94,7 +98,7 @@ submit.addEventListener('click', function(event){
 
     //get the download progress via socket
     socket.on('message', (msg) => {
-        console.log('message: ' + msg);
+        helper.changeProgress(parseFloat(msg));
     });
     
     //To do's:

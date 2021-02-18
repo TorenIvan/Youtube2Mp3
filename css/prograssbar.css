@@ -20,7 +20,7 @@
     top: .0rem;
     bottom: .0rem;
     max-width: calc(100% - 1.4rem);
-    background-color: #01271f;
+    background-color: #202933;
     border-radius: 0.8rem;
     padding: .8rem;
     width: calc(var(--width, 0) * 1%);
