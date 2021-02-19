@@ -1,6 +1,3 @@
-// import io from 'socket.io-client';
-// import { endProgress } from './loading';
-// import { endLoader } from './loading';
 import * as helper from '/js/loading.js';
 import  validateYouTubeUrl  from '/js/validator.js';
 
@@ -13,7 +10,7 @@ let url    = document.querySelector('#url');
 // Declare socket -> connect
 let socket = io();
 
-//Hide the loading elements
+//Hide the loading, converting elements
 helper.endLoader();
 helper.endProgress();
 
@@ -21,16 +18,16 @@ helper.endProgress();
 // Event listener
 submit.addEventListener('click', function(event){
 
-    var path = "http://localhost:5005/";                                                //path declaration and assign
+    var path = "http://localhost:5005/";                                                //path declaration and assign, to-be changed before it's deploy
 
     if(url){
         //Check Validations
         if (!url.checkValidity()) return;
-        event.preventDefault();                                                     //check html5 validations and the prevent default
+        event.preventDefault();                                                         //check html5 validations and the prevent default
                                                                                         
-        helper.init();                                                                   //change the css, to show that it's converting
+        helper.init();                                                                  //change the css - initialize loader, to show that it's converting, it's faster to do here than after js validation
      
-        if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, else popup and return
+        if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, if error endLoader popup and return
             endLoader();  
             endProgress();             
             window.alert('eeerrprr')                  

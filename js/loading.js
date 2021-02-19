@@ -16,9 +16,7 @@ function endLoader(){
     submit.disabled = false;
 
     if(loader.className = "hidden")             loader.classList.remove('hidden');
-    progressBar.style.display = "";
     loader.style.display      = "none"; 
-    uri.style.display         = "none"; 
 }
 
 function endProgress(){
@@ -45,7 +43,7 @@ function hideAll(){
     uri.style.display         = "";
     progressBar.style.display = "none";
     loader.style.display      = "none";
-    
+
     uri.value                 = "";
 }
 
