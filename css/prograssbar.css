@@ -12,6 +12,7 @@
 }
 
 #progress-bar::before{
+    box-sizing: border-box;
     position: absolute;
     content: attr(data-label);
     display: flex;
@@ -19,7 +20,7 @@
     left: .0rem;
     top: .0rem;
     bottom: .0rem;
-    max-width: calc(100% - 1.4rem);
+    max-width: calc(100%);
     background-color: #202933;
     border-radius: 0.8rem;
     padding: .8rem;

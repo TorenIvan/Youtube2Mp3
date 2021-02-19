@@ -1,5 +1,6 @@
 // import io from 'socket.io-client';
 // import { endProgress } from './loading';
+// import { endLoader } from './loading';
 import * as helper from '/js/loading.js';
 import  validateYouTubeUrl  from '/js/validator.js';
 
@@ -11,17 +12,18 @@ let url    = document.querySelector('#url');
 
 // Declare socket -> connect
 let socket = io();
+let counter = 0;
 console.log('connected');
 
 //Hide the loading element
+helper.hideLoader();
+helper.endLoader();
 helper.hideProgress();
 helper.endProgress();
 
+
 // Event listener
 submit.addEventListener('click', function(event){
-
-    helper.hideProgress();
-    helper.endProgress();
 
     var path = "http://localhost:5005/";                                                //path declaration and assign
 
@@ -33,7 +35,7 @@ submit.addEventListener('click', function(event){
         helper.init();                                                                   //change the css, to show that it's converting
      
         if(validateYouTubeUrl(url.value) === false) {                                   //check js validations, else popup and return
-            // endLoader();  
+            endLoader();  
             endProgress();             
             window.alert('eeerrprr')                  
             return;         
@@ -85,9 +87,9 @@ submit.addEventListener('click', function(event){
                     a.click();
                 }
                 // helper.endLoader();
-                helper.endProgress();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
-                url.value = '';
+                // helper.endProgress();
+                // url.value = '';
             }
         }
     }
@@ -103,5 +105,4 @@ submit.addEventListener('click', function(event){
     
     //To do's:
         // 1) modal popup based on error + try catch
-        // 2) show loading process (client side)
     });

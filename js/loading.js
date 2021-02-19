@@ -6,19 +6,21 @@ function init(){
     document.getElementById('submit').disabled = true;
 
     uri.style.display      = "none";
-    // loader.style.display   = "";
-    progress.style.display = "";
+    progress.style.display = "none";
+    loader.style.display   = "";
 }
 
 
 function endLoader(){
     var loader   = document.getElementById('loader');         
     var uri      = document.getElementById('url');
+    var progress = document.getElementById('progress-bar');
 
     document.getElementById('submit').disabled = false;
 
-    uri.style.display    = "";
-    loader.style.display = "none"; 
+    progress.style.display    = "";
+    loader.style.display      = "none"; 
+    uri.style.display          = "none"; 
 }
 
 function hideLoader(){
@@ -32,8 +34,8 @@ function endProgress(){
 
     document.getElementById('submit').disabled = false;
 
-    uri.style.display      = "";
     progress.style.display = "none"; 
+    uri.style.display      = "";
 }
 
 function hideProgress(){
@@ -43,8 +45,29 @@ function hideProgress(){
 
 function changeProgress(progress){
     var progressBar   = document.getElementById('progress-bar');
+    var loader = document.getElementById('loader'); 
+
+    if (loader.style.display != "none") loader.style.display = "none";
+    if (progressBar.style.display == "none") progressBar.style.display = "";
+    
     progressBar.style.setProperty('--width', progress); 
     console.log(progress);
+    
+    //end
+    if (progress == 100) hideAll();
+}
+
+function hideAll(){
+    var loader   = document.getElementById('loader');         
+    var uri      = document.getElementById('url');
+    var progress = document.getElementById('progress-bar');
+
+    document.getElementById('submit').disabled = false;
+    console.log('mpika');
+
+    uri.style.display      = "";
+    progress.style.display = "none";
+    loader.style.display   = "none";
 }
 
 export {init, endLoader, hideLoader, endProgress, hideProgress, changeProgress}
