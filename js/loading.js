@@ -1,73 +1,53 @@
+const loader      = document.getElementById('loader');         
+const uri         = document.getElementById('url');
+const progressBar = document.getElementById('progress-bar');
+const submit      = document.getElementById('submit');
+
+
 function init(){
-    var loader   = document.getElementById('loader');         
-    var uri      = document.getElementById('url');
-    var progress = document.getElementById('progress-bar');
+    submit.disabled = true;
 
-    document.getElementById('submit').disabled = true;
-
-    uri.style.display      = "none";
-    progress.style.display = "none";
-    loader.style.display   = "";
+    uri.style.display         = "none";
+    progressBar.style.display = "none";
+    loader.style.display      = "";
 }
-
 
 function endLoader(){
-    var loader   = document.getElementById('loader');         
-    var uri      = document.getElementById('url');
-    var progress = document.getElementById('progress-bar');
+    submit.disabled = false;
 
-    document.getElementById('submit').disabled = false;
-
-    progress.style.display    = "";
+    if(loader.className = "hidden")             loader.classList.remove('hidden');
+    progressBar.style.display = "";
     loader.style.display      = "none"; 
-    uri.style.display          = "none"; 
-}
-
-function hideLoader(){
-    var loader = document.getElementById('loader');         
-    if(loader.className = "hidden") loader.classList.remove('hidden');
+    uri.style.display         = "none"; 
 }
 
 function endProgress(){
-    var progress = document.getElementById('progress-bar');         
-    var uri      = document.getElementById('url');
+    submit.disabled = false;
 
-    document.getElementById('submit').disabled = false;
-
-    progress.style.display = "none"; 
-    uri.style.display      = "";
-}
-
-function hideProgress(){
-    var progress = document.getElementById('progress-bar');          
-    if(progress.className = "hidden") progress.classList.remove('hidden');
+    if(progressBar.className  = "hidden")       progressBar.classList.remove('hidden');
+    progressBar.style.display = "none"; 
+    uri.style.display         = "";
 }
 
 function changeProgress(progress){
-    var progressBar   = document.getElementById('progress-bar');
-    var loader = document.getElementById('loader'); 
-
-    if (loader.style.display != "none") loader.style.display = "none";
-    if (progressBar.style.display == "none") progressBar.style.display = "";
+    if (loader.style.display != "none")         loader.style.display = "none";
+    if (progressBar.style.display == "none")    progressBar.style.display = "";
     
     progressBar.style.setProperty('--width', progress); 
-    console.log(progress);
     
-    //end
+    //endAll
     if (progress == 100) hideAll();
 }
 
 function hideAll(){
-    var loader   = document.getElementById('loader');         
-    var uri      = document.getElementById('url');
-    var progress = document.getElementById('progress-bar');
+    submit.disabled = false;
 
-    document.getElementById('submit').disabled = false;
-    console.log('mpika');
-
-    uri.style.display      = "";
-    progress.style.display = "none";
-    loader.style.display   = "none";
+    uri.style.display         = "";
+    progressBar.style.display = "none";
+    loader.style.display      = "none";
+    
+    uri.value                 = "";
 }
 
-export {init, endLoader, hideLoader, endProgress, hideProgress, changeProgress}
+
+export {init, endLoader, endProgress, changeProgress}

@@ -12,13 +12,9 @@ let url    = document.querySelector('#url');
 
 // Declare socket -> connect
 let socket = io();
-let counter = 0;
-console.log('connected');
 
-//Hide the loading element
-helper.hideLoader();
+//Hide the loading elements
 helper.endLoader();
-helper.hideProgress();
 helper.endProgress();
 
 
@@ -86,10 +82,7 @@ submit.addEventListener('click', function(event){
                     document.body.appendChild(a);
                     a.click();
                 }
-                // helper.endLoader();
                 setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
-                // helper.endProgress();
-                // url.value = '';
             }
         }
     }
