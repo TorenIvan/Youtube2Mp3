@@ -1,6 +1,8 @@
 const ytdl = require('ytdl-core');
 const { getInfo } = require('ytdl-core');
 const getYoutubeTitle = require('get-youtube-title');
+const { response } = require('express');
+const { reject } = require('lodash');
 
 class YouTubeParser {
 
@@ -40,29 +42,14 @@ class YouTubeParser {
     return ytdl.validateURL(this.url);
   }
 
-  // YouTubeGetTitle(){
-  //   return getYoutubeTitle(ytdl.getURLVideoID(this.url), function (err, title) {
-  //     console.log(title); // 'SLCHLD - EMOTIONS (feat. RIPELY) (prod. by GILLA)'
-  //     // return title;
-  //   })
-  //   // console.log(title); 
-  // }
-
   YouTubeGetTitle(){
-    return new Promise((resolve, reject) => {
-      getYoutubeTitle(ytdl.getURLVideoID(this.url), function(err, info) {
+    return new Promise ((resolve, reject) => {
+      getYoutubeTitle(ytdl.getURLVideoID(this.url), (err, title) => {
         if (err) reject(err);
-        resolve(info);
-      }).then((result) => {
-        resolve(result);
-        console.log(result);
-      }).catch((_message) => {
-        reject(_message);
+        resolve(title);
       });
     });
   }
-
-  
 
   YouTubeGetInfo(){
     return new Promise((resolve, reject) => {
@@ -84,10 +71,12 @@ module.exports = YouTubeParser;
 
 //Example usage
 
-let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+// let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
 
 
-yurl.YouTubeGetTitle().then(console.log('ee'));
+// yurl.YouTubeGetTitle().then(message => console.log(message)).catch(_message => console.log(_message))
+  //   console.log('somethig is sooooo wrong');
+  // });
     
 
 
