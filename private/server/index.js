@@ -11,7 +11,8 @@ const ffmpeg             = require('fluent-ffmpeg');
 const contentDisposition = require('content-disposition');
 const helmet             = require("helmet");
 const path               = require('path');
-const readline = require('readline');
+const readline           = require('readline');
+
 //custom requires
 const YouTubeParser      = require('../youtubeclasses/youtubebasic');
 
@@ -63,7 +64,7 @@ app.get('/songs', function (req, res) {
             res.set('Content-Disposition', contentDisposition(title));
             res.header({ "Content-Type": "audio/mpeg" });
 
-            let stream = ytdl(url,  {filter: 'audioandvideo', quality: 'highestvideo'});
+            let stream = ytdl(url,  {filter: 'audioonly', quality: 'highestaudio'});
             let starttime;
             // stream.pipe(res);    
             stream.once('response', () => {

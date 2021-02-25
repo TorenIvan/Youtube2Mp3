@@ -1,13 +1,16 @@
 const ytdl = require('ytdl-core');
 const { getInfo } = require('ytdl-core');
-
+const getYoutubeTitle = require('get-youtube-title');
 
 class YouTubeParser {
 
   //constructor
   constructor(url){
     this.url = url;
-    console.log('ir8e')
+  }
+
+  getUrl(){
+    return this.url;
   }
 
   //get video id (aka vid or v)
@@ -37,6 +40,30 @@ class YouTubeParser {
     return ytdl.validateURL(this.url);
   }
 
+  // YouTubeGetTitle(){
+  //   return getYoutubeTitle(ytdl.getURLVideoID(this.url), function (err, title) {
+  //     console.log(title); // 'SLCHLD - EMOTIONS (feat. RIPELY) (prod. by GILLA)'
+  //     // return title;
+  //   })
+  //   // console.log(title); 
+  // }
+
+  YouTubeGetTitle(){
+    return new Promise((resolve, reject) => {
+      getYoutubeTitle(ytdl.getURLVideoID(this.url), function(err, info) {
+        if (err) reject(err);
+        resolve(info);
+      }).then((result) => {
+        resolve(result);
+        console.log(result);
+      }).catch((_message) => {
+        reject(_message);
+      });
+    });
+  }
+
+  
+
   YouTubeGetInfo(){
     return new Promise((resolve, reject) => {
       ytdl.getInfo(this.url, function(err, info) {
@@ -57,9 +84,14 @@ module.exports = YouTubeParser;
 
 //Example usage
 
-// let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
 
-// console.log(yurl.YouTubeGetID());
+
+yurl.YouTubeGetTitle().then(console.log('ee'));
+    
+
+
+  //   console.log(message.videoDetails);
 // console.log(yurl.YouTubeGetID());
 // console.log(yurl.YouTubeValidateURL());
 // console.log(yurl.YouTubeValidateId());
