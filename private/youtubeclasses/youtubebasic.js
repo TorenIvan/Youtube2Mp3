@@ -40,6 +40,10 @@ class YouTubeParser {
     return ytdl.validateURL(this.url);
   }
 
+  // videoExists(){
+  //   return ytdl.chooseFormat(info.formats, { quality: '134' });
+  // }
+
   // YouTubeGetTitle(){
   //   return getYoutubeTitle(ytdl.getURLVideoID(this.url), function (err, title) {
   //     console.log(title); // 'SLCHLD - EMOTIONS (feat. RIPELY) (prod. by GILLA)'
@@ -49,15 +53,9 @@ class YouTubeParser {
   // }
 
   YouTubeGetTitle(){
-    return new Promise((resolve, reject) => {
-      getYoutubeTitle(ytdl.getURLVideoID(this.url), function(err, info) {
-        if (err) reject(err);
-        resolve(info);
-      }).then((result) => {
-        resolve(result);
-        console.log(result);
-      }).catch((_message) => {
-        reject(_message);
+    return new Promise((resolve) => {
+      getYoutubeTitle(ytdl.getURLVideoID(this.url), function(title) {
+        resolve(title);
       });
     });
   }
@@ -84,10 +82,10 @@ module.exports = YouTubeParser;
 
 //Example usage
 
-let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
+// let yurl = new YouTubeParser('https://www.youtube.com/watch?v=dlFA0Zq1k2A');
 
 
-yurl.YouTubeGetTitle().then(console.log('ee'));
+// yurl.YouTubeGetTitle().then(message => console.log(message));
     
 
 
@@ -98,9 +96,9 @@ yurl.YouTubeGetTitle().then(console.log('ee'));
 
 // yurl.YouTubeGetInfo()
 // .then((message) => {
-//   console.log(message.videoDetails);
- // console.log(message.videoDetails.title);
-  //console.log(message.videoDetails.lengthSeconds);
+//   console.log(message.formats);
+// //  console.log(message.videoDetails.title);
+// //   console.log(message.videoDetails.lengthSeconds);
 // }).catch((_message) => {
 //   console.log('somethig is sooooo wrong');
 // });
