@@ -91,6 +91,7 @@ submit.addEventListener('click', function(event){
     //get the download progress via socket
     socket.on('message', (msg) => {
         helper.changeProgress(parseFloat(msg));
+        console.log(msg);
     });
     
     //To do's:
