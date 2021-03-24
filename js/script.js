@@ -18,7 +18,7 @@ helper.endProgress();
 // Event listener
 submit.addEventListener('click', function(event){
 
-    var path = "http://localhost:5005/";                                                //path declaration and assign, to-be changed before it's deploy
+    var path = "https://ytb2mp3.herokuapp.com/" || "http://localhost:5005/";                                                //path declaration and assign, to-be changed before it's deploy
 
     if(url){
         //Check Validations
