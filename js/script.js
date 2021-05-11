@@ -18,7 +18,7 @@ helper.endProgress();
 // Event listener
 submit.addEventListener('click', function(event){
 
-    var path = process.env.url;		                                                //path declaration and assign, to-be changed before it's deploy
+    var path = "http://localhost:5005/";		                                                //path declaration and assign, to-be changed before it's deploy
 
     if(url){
         //Check Validations
@@ -79,7 +79,7 @@ submit.addEventListener('click', function(event){
                     document.body.appendChild(a);
                     a.click();
                 }
-                setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+                URL.revokeObjectURL(downloadUrl);  // cleanup
             }
         }
     }
@@ -96,4 +96,4 @@ submit.addEventListener('click', function(event){
     
     //To do's:
         // 1) modal popup based on error + try catch
-    });
+});
