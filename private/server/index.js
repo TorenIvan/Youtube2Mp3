@@ -84,6 +84,7 @@ app.get('/songs', function (req, res) {
             });
             stream.on('end', () => {
                 process.stdout.write('\n\n');
+                console.log('Stream ended');
             });
         
             // Send compressed audio data
