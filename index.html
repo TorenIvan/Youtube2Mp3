@@ -1,37 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">        
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="stylesheet" type="text/css" href="css/prograssbar.css">
-        <script type='text/javascript' src="js/buttons.js" async></script>
-        <script type='module' src="js/script.js" async></script>
-        <script type='module' src="socket.io/socket.io.js"></script>
-        <title>ytb2mp3</title>
-    </head> 
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/prograssbar.css" />
+    <script type="text/javascript" src="js/buttons.js" async></script>
+    <script type="module" src="js/script.js" async></script>
+    <script type="module" src="socket.io/socket.io.js"></script>
+    <title>ytb2mp3</title>
+  </head>
 
-    <body>
-        <header>
-            <p>YouTube Converter</p>
-        </header>
+  <body>
+    <header>
+      <p>YouTube Converter</p>
+    </header>
 
-        <div id="container">
-            <p>Please insert a valid YouTube link</p> 
-            <div id="converter">
-                <form id="form">
-                    <input type="url" id="url" name="url" placeholder="https://www.youtube.com/watch?v=hP6VM6YAMIE" pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?" required>      
-                    <div id="progress-bar" data-label="Converting..." class="hidden"></div>
-                    <div id="loader" class="hidden"></div>
-                </form> 
-            </div>
-            <div id="button-container">
-                <button type="button" id="mp3" class = 'active'>mp3</button>
-                <button type="button" id="mp4" class = 'inactive'>mp4</button>
-            </div>
-            <div id="submit-button">
-                <button type="submit" form="form" id="submit" value="Submit">Convert</button>
-            </div>
-        </div>
-    </body>
+    <div id="container">
+      <p>Please insert a valid YouTube link</p>
+      <div id="converter">
+        <form id="form">
+          <input
+            type="url"
+            id="url"
+            name="url"
+            placeholder="https://www.youtube.com/watch?v=hP6VM6YAMIE"
+            pattern="(http:|https:)?(\/\/)?(www\.)?(youtube.com|youtu.be)\/(watch|embed)?(\?v=|\/)?(\S+)?"
+            required
+          />
+          <div
+            id="progress-bar"
+            data-label="Converting..."
+            class="hidden"
+          ></div>
+          <div id="loader" class="hidden"></div>
+        </form>
+      </div>
+      <div id="button-container">
+        <button type="button" id="mp3" class="active">mp3</button>
+        <button type="button" id="mp4" class="inactive">mp4</button>
+      </div>
+      <div id="submit-button">
+        <button type="submit" form="form" id="submit" value="Submit">
+          Convert
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
