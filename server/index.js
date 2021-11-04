@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
 });
 
 //path to serve static files
-app.use(express.static(path.join(__dirname, "../../")));
+app.use(express.static(path.join(__dirname, "../")));
 
 //request to homepage
 app.get("/", (req, res) => {

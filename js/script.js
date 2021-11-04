@@ -51,7 +51,7 @@ submit.addEventListener("click", function (event) {
 
   //listener, when the request completes successfully, alternatively onreadystatechange
   xhr.onload = () => {
-      console.log('mpika load');
+    console.log("mpika load");
     // 4: request finished and response is ready,   200: "OK"
     if (xhr.readyState === 4 && xhr.status === 200) {
       //get infos from response header
